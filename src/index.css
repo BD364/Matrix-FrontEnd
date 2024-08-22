@@ -1,0 +1,91 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+}
+
+.social-icons a {
+  color: white;
+  margin-right: 15px;
+  font-size: 1.5em;
+}
+
+.social-icons a:hover {
+  color: #ccc;
+}
+
+.sign-in button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.sign-in button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Hero section styles */
+.hero-section {
+  text-align: center;
+  padding: 100px 20px;
+  background-color: #333;
+  color: white;
+}
+
+.hero-section h1 {
+  font-size: 80px;
+  color: #f1c40f;
+}
+
+.hero-section h2 {
+  font-size: 50px;
+  color: #bbb;
+}
+
+.hero-section p {
+  font-size: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* Carousel styles */
+.carousel .control-dots .dot {
+  background-color: #ffcc00;
+  box-shadow: none;
+  width: 15px;
+  height: 15px;
+  margin: 0 3px;
+}
+
+.carousel .control-dots .dot.selected {
+  background-color: #ffaa00;
+}
+
+.image-carousel {
+  margin-bottom: 50px;
+}
