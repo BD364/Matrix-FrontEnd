@@ -57,7 +57,6 @@ const UpdatePost = () => {
           },
         }
       );
-      console.log('Post updated successfully:', response.data);
     } catch (error) {
       console.error(
         'Error updating post:',

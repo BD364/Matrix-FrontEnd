@@ -27,7 +27,6 @@ const CreatePost = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      console.log('Post created successfully:', response.data);
     } catch (error) {
       console.error('Error creating post:', error.response ? error.response.data : error.message);
     }

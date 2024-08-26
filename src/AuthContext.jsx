@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
   const register = async (formData) => {
     try {
       const response = await api.post('/register', formData);
-      console.log('Registration successful:', response.data);
     } catch (error) {
       console.error('Error registering:', error.response ? error.response.data : error.message);
     }
@@ -36,7 +35,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.post('/login', credentials);
       setToken(response.data.access_token);
-      console.log('Login successful:', response.data);
     } catch (error) {
       console.error('Error logging in:', error.response ? error.response.data : error.message);
     }
