@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./components/HomePage.jsx";
 import ImageCarousel from "./components/ImageCarousel";
