@@ -11,7 +11,6 @@ import RoadKerb from './components/RoadKerbAccessories';
 import Services from './components/Services';
 import Gallery from './components/Gallery';
 import Downloads from './components/Downloads';
-import SignUp from './components/SignUp';
 import Register from './components/Register/Register.jsx';
 import Login from './components/Login/Login.jsx';
 import CreatePost from './components/Create/CreatePost.jsx';
@@ -35,7 +34,6 @@ function App() {
           <Route path='/services' element={<Services />} />
           <Route path='/gallery' element={<Gallery />} />
           <Route path='/downloads' element={<Downloads />} />
-          <Route path='/sign-up' element={<SignUp />} />
         </Routes>
         <ImageCarousel />
       </Router>
