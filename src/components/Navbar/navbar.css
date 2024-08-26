@@ -69,6 +69,20 @@
     display: none !important;
   }
 
+  .social-icons-toggle {
+    display: none;
+  }
+
+  .sign-in-toggle {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+  }
+
   .nav-links-toggle {
     list-style-type: none;
     padding: 0;
@@ -145,6 +159,23 @@
 
   .social-icons {
     display: none;
+  }
+
+  .social-icons-toggle {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  .social-icons-toggle a {
+    color: white;
+    font-size: 1.5em;
+  }
+
+  .sign-in-toggle {
+    display: flex;
+    margin-top: 10px;
   }
 
   .navbarMenuContainerToggle {

@@ -116,7 +116,37 @@ const Navbar = () => {
                 <a href='/downloads'>Downloads</a>
               </li>
             </ul>
-            <button className='sign-in'>Sign In</button>
+            <div className='social-icons-toggle'>
+          <a
+            href='https://www.instagram.com'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FaInstagram />
+          </a>
+          <a
+            href='https://www.twitter.com'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FaTwitter />
+          </a>
+          <a
+            href='https://www.whatsapp.com'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FaWhatsapp />
+          </a>
+          <a
+            href='https://www.facebook.com'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <FaFacebook />
+          </a>
+        </div>
+            <button className='sign-in-toggle'>Sign In</button>
           </div>
         </div>
       )}
