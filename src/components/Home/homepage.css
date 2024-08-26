@@ -1,4 +1,3 @@
-/* Hero section styles */
 .hero-section {
   text-align: center;
   padding: 100px 20px;
@@ -22,7 +21,6 @@
   margin: 20px auto;
 }
 
-/* Carousel styles */
 .carousel .control-dots .dot {
   background-color: #ffcc00;
   box-shadow: none;
