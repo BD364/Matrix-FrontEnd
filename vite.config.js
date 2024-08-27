@@ -8,5 +8,9 @@ export default defineConfig({
     rollupOptions: {
       external: ['axios'],
     },
+  server: {
+    port: 3006,
   },
-})
+}
+}
+)
