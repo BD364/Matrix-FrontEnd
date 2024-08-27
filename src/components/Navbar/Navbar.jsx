@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import './navbar.css';
 import { FaInstagram, FaTwitter, FaWhatsapp, FaFacebook } from 'react-icons/fa';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSignInClick = () => {
+    navigate('/login');
+  };
 
   return (
     <nav className='navbar'>
@@ -71,7 +77,9 @@ const Navbar = () => {
             <FaFacebook />
           </a>
         </div>
-        <button className='sign-in'>Sign In</button>
+        <button className='sign-in' onClick={handleSignInClick}>
+          Sign In
+        </button>
 
         <div className='navbarMenu'>
           {toggleMenu ? (
@@ -117,36 +125,38 @@ const Navbar = () => {
               </li>
             </ul>
             <div className='social-icons-toggle'>
-          <a
-            href='https://www.instagram.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <FaInstagram />
-          </a>
-          <a
-            href='https://www.twitter.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <FaTwitter />
-          </a>
-          <a
-            href='https://www.whatsapp.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <FaWhatsapp />
-          </a>
-          <a
-            href='https://www.facebook.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <FaFacebook />
-          </a>
-        </div>
-            <button className='sign-in-toggle'>Sign In</button>
+              <a
+                href='https://www.instagram.com'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href='https://www.twitter.com'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <FaTwitter />
+              </a>
+              <a
+                href='https://www.whatsapp.com'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <FaWhatsapp />
+              </a>
+              <a
+                href='https://www.facebook.com'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <FaFacebook />
+              </a>
+            </div>
+            <button className='sign-in-toggle' onClick={handleSignInClick}>
+              Sign In
+            </button>
           </div>
         </div>
       )}

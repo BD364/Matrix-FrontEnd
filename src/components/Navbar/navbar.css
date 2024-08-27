@@ -44,7 +44,7 @@
 
 .social-icons a {
   color: white;
-  font-size: 1.5em;
+  font-size: 1.1em;
 }
 
 .sign-in {
@@ -64,6 +64,16 @@
   display: none;
 }
 
+@media (min-width: 1300px) {
+  .navbarMenu {
+    display: none;
+  }
+
+  .navbarMenuContainerToggle {
+    display: none;
+  }
+}
+
 @media (max-width: 1300px) {
   .nav-links {
     display: none !important;
@@ -71,6 +81,20 @@
 
   .social-icons-toggle {
     display: none;
+  }
+
+  .social-icons a {
+    color: white;
+    font-size: 1.1em;
+  }
+
+  .sign-in {
+    padding: 7px 13px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
   }
 
   .sign-in-toggle {
@@ -170,7 +194,7 @@
 
   .social-icons-toggle a {
     color: white;
-    font-size: 1.5em;
+    font-size: 1em;
   }
 
   .sign-in-toggle {

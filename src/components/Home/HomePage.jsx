@@ -1,10 +1,12 @@
-import React from "react";
-import Navbar from "./Navbar/Navbar";
+import React from 'react';
+import './homepage.css';
+import Navbar from '../Navbar/Navbar';
+
 const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <header className="hero-section">
+      <header className='hero-section'>
         <h1>MATRIX</h1>
         <h2>Precast Concrete</h2>
         <p>
