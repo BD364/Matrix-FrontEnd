@@ -15,6 +15,7 @@ import Register from './components/Register/Register.jsx';
 import Login from './components/Login/Login.jsx';
 import CreatePost from './components/Create/CreatePost.jsx';
 import UpdatePost from './components/UpdatePost/UpdatePost.jsx';
+import BeamBlockList from './components/BeamblocksList/BeamblocksList.jsx';
 import './index.css';
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/create' element={<CreatePost />} />
           <Route path='/update/:postId' element={<UpdatePost />} />
-          <Route path='/beam-block' element={<BeamBlock />} />
+          <Route path='/beamblocks' element={<BeamBlockList />} />
           <Route path='/hollow-blocks' element={<HollowBlocks />} />
           <Route path='/paving-blocks' element={<PavingBlocks />} />
           <Route path='/road-kerb' element={<RoadKerb />} />

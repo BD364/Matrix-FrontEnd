@@ -64,6 +64,40 @@
   display: none;
 }
 
+.modal-overlaym {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-contentm {
+  background-color: white;
+  padding: 5rem;
+  border-radius: 8px;
+  position: relative;
+  width: auto;
+  min-width: 400px;
+  max-width: 90%;
+}
+
+.close-btnm {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  color: #555;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
 @media (min-width: 1300px) {
   .navbarMenu {
     display: none;

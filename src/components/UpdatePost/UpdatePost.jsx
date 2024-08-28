@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useAuth } from '../../AuthContext';
+import { useNavigate, useParams } from 'react-router-dom';
 import './updatePost.css';
-import { useParams } from 'react-router-dom';
 
 const UpdatePost = () => {
   const { postId } = useParams();
+  const { api, token } = useAuth();
   const [postData, setPostData] = useState({
     title: '',
     content: '',
@@ -12,55 +13,69 @@ const UpdatePost = () => {
     price: '',
     description: '',
   });
+  const [imageFile, setImageFile] = useState(null);
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/beamblock/${postId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-            timeout: 5000,
-          }
-        );
+        const response = await api.get(`/beamblock/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setPostData(response.data);
       } catch (error) {
         console.error(
           'Error fetching post:',
           error.response ? error.response.data : error.message
         );
+        setMessage('Error fetching post.');
       }
     };
 
     fetchPost();
-  }, [postId]);
+  }, [postId, api, token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPostData({
-      ...postData,
+    setPostData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', postData.title);
+    formData.append('content', postData.content);
+    formData.append('price', postData.price);
+    formData.append('description', postData.description);
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
     try {
-      const response = await axios.put(
-        `http://localhost:5000/update/beamblock/${postId}`,
-        postData,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
-      );
+      const response = await api.put(`/update/beamblock/${postId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setPostData(response.data.beamblock);
+      setMessage('Post updated successfully! Redirecting to home page...');
+      setTimeout(() => navigate('/beamblocks'), 2000);
     } catch (error) {
-      console.error(
-        'Error updating post:',
-        error.response ? error.response.data : error.message
+      setMessage(
+        'Error updating post: ' +
+          (error.response ? error.response.data : error.message)
       );
     }
   };
@@ -72,7 +87,7 @@ const UpdatePost = () => {
         <input
           type='text'
           name='title'
-          value={postData.title}
+          value={postData.title || ''}
           onChange={handleChange}
           placeholder='Post Title'
           required
@@ -80,24 +95,22 @@ const UpdatePost = () => {
         />
         <textarea
           name='content'
-          value={postData.content}
+          value={postData.content || ''}
           onChange={handleChange}
           placeholder='Post Content'
           required
           className='textarea'
         />
         <input
-          type='text'
-          name='image_url'
-          value={postData.image_url}
-          onChange={handleChange}
-          placeholder='Image URL'
+          type='file'
+          name='image'
+          onChange={handleFileChange}
           className='input'
         />
         <input
           type='number'
           name='price'
-          value={postData.price}
+          value={postData.price || ''}
           onChange={handleChange}
           placeholder='Price'
           required
@@ -105,7 +118,7 @@ const UpdatePost = () => {
         />
         <textarea
           name='description'
-          value={postData.description}
+          value={postData.description || ''}
           onChange={handleChange}
           placeholder='Description'
           className='textarea'
@@ -114,6 +127,17 @@ const UpdatePost = () => {
           Update Post
         </button>
       </form>
+      {postData.image_url && (
+        <div className='image-container'>
+          <h3>Current Image:</h3>
+          <img
+            src={`http://localhost:5000/static${postData.image_url}`}
+            alt='Current Post'
+            className='post-image'
+          />
+        </div>
+      )}
+      <p>{message}</p>
     </div>
   );
 };

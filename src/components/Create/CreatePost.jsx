@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import './createPost.css'; 
+import { useAuth } from '../../AuthContext';
+import { useNavigate } from 'react-router-dom';
+import './createPost.css';
 
 const CreatePost = () => {
+  const { token, api } = useAuth(); 
   const [postData, setPostData] = useState({
     title: '',
     content: '',
-    image_url: '',
     price: '',
     description: ''
   });
+  const [imageFile, setImageFile] = useState(null); 
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,23 +23,45 @@ const CreatePost = () => {
     });
   };
 
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!token || !api) {
+      setMessage('Authentication or API setup is missing.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('title', postData.title);
+    formData.append('content', postData.content);
+    formData.append('price', postData.price);
+    formData.append('description', postData.description);
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
     try {
-      const response = await axios.post('http://localhost:5000/create/beamblock', postData, {
+      const response = await api.post('/create/beamblock', formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
+      setMessage('Post created successfully! Redirecting to home page...');
+      setTimeout(() => navigate('/'), 2000); 
     } catch (error) {
-      console.error('Error creating post:', error.response ? error.response.data : error.message);
+      setMessage('Error creating post: ' + (error.response ? error.response.data.message : error.message));
     }
   };
 
   return (
     <div className="create-post-container">
       <h2>Create New Post</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <input
           type="text"
           name="title"
@@ -53,14 +79,15 @@ const CreatePost = () => {
           required
           className="textarea"
         />
+        
         <input
-          type="text"
-          name="image_url"
-          value={postData.image_url}
-          onChange={handleChange}
-          placeholder="Image URL"
+          type="file"
+          name="image"
+          accept="image/*"
+          onChange={handleImageChange}
           className="input"
         />
+        
         <input
           type="number"
           name="price"
@@ -79,6 +106,7 @@ const CreatePost = () => {
         />
         <button type="submit" className="submit-button">Create Post</button>
       </form>
+      {message && <p>{message}</p>} 
     </div>
   );
 };

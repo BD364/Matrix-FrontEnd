@@ -3,13 +3,24 @@ import './navbar.css';
 import { FaInstagram, FaTwitter, FaWhatsapp, FaFacebook } from 'react-icons/fa';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import Login from '../Login/Login';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSignInClick = () => {
     navigate('/login');
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -24,7 +35,7 @@ const Navbar = () => {
 
       <ul className='nav-links'>
         <li>
-          <a href='/beam-block'>Beam & Block</a>
+          <Link to='/beamblocks'>Beam & Block</Link>
         </li>
         <li>
           <a href='/hollow-blocks'>Hollow Blocks</a>
@@ -77,9 +88,12 @@ const Navbar = () => {
             <FaFacebook />
           </a>
         </div>
-        <button className='sign-in' onClick={handleSignInClick}>
-          Sign In
-        </button>
+        <div>
+          <Link to='/'></Link>
+          <button className='sign-in' onClick={openModal}>
+            Sign In
+          </button>
+        </div>
 
         <div className='navbarMenu'>
           {toggleMenu ? (
@@ -154,9 +168,19 @@ const Navbar = () => {
                 <FaFacebook />
               </a>
             </div>
-            <button className='sign-in-toggle' onClick={handleSignInClick}>
+            <button className='sign-in-toggle' onClick={openModal}>
               Sign In
             </button>
+          </div>
+        </div>
+      )}
+      {isModalOpen && (
+        <div className='modal-overlaym' onClick={closeModal}>
+          <div className='modal-contentm' onClick={(e) => e.stopPropagation()}>
+            <button className='close-btnm' onClick={closeModal}>
+              &times;
+            </button>
+            <Login closeModal={closeModal} />
           </div>
         </div>
       )}

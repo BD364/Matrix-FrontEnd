@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './register.css';
 
 const Register = () => {
@@ -11,6 +12,8 @@ const Register = () => {
     password: '',
     is_admin: false,
   });
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -22,7 +25,13 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await register(formData);
+    try {
+      await register(formData);
+      setMessage('Registration successful! Redirecting to login...');
+      setTimeout(() => navigate('/login'), 2000); 
+    } catch (error) {
+      setMessage('Error registering: ' + (error.response ? error.response.data : error.message));
+    }
   };
 
   return (
@@ -35,6 +44,7 @@ const Register = () => {
           onChange={handleChange}
           placeholder='Username'
           className='input'
+          required
         />
         <input
           type='email'
@@ -43,6 +53,7 @@ const Register = () => {
           onChange={handleChange}
           placeholder='Email'
           className='input'
+          required
         />
         <input
           type='text'
@@ -51,6 +62,7 @@ const Register = () => {
           onChange={handleChange}
           placeholder='Phone Number'
           className='input'
+          required
         />
         <input
           type='password'
@@ -59,6 +71,7 @@ const Register = () => {
           onChange={handleChange}
           placeholder='Password'
           className='input'
+          required
         />
         <div className='checkbox-container'>
           <input
@@ -71,6 +84,10 @@ const Register = () => {
         </div>
         <button type='submit'>Register</button>
       </form>
+      <p>{message}</p> 
+      <button onClick={() => navigate('/login')} className='login-button'>
+        Already have an account? Login
+      </button>
     </div>
   );
 };
