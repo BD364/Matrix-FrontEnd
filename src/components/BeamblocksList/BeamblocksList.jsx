@@ -44,7 +44,7 @@ const BeamBlockList = () => {
     <div className='beamblock-list-container'>
     <Navbar/>
       <div className='introduction'>
-        <h2> BeamBlocks</h2>
+        <h2 className='font-bold'> BeamBlocks</h2>
         <p>
           Welcome to our collection of BeamBlocks! BeamBlocks are a unique and essential part of our inventory,
           each offering distinctive features and characteristics. Browse through our selection to find the perfect 

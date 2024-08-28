@@ -3,14 +3,6 @@ import { AuthProvider } from './AuthContext.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './components/Home/HomePage.jsx';
-import ImageCarousel from './components/ImageCarousel';
-import BeamBlock from './components/BeamBlock';
-import HollowBlocks from './components/HollowBlocks';
-import PavingBlocks from './components/PavingBlocks';
-import RoadKerb from './components/RoadKerbAccessories'; 
-import Services from './components/Services';
-import Gallery from './components/Gallery';
-import Downloads from './components/Downloads';
 import Register from './components/Register/Register.jsx';
 import Login from './components/Login/Login.jsx';
 import CreatePost from './components/Create/CreatePost.jsx';
@@ -29,12 +21,6 @@ function App() {
           <Route path='/create' element={<CreatePost />} />
           <Route path='/update/:postId' element={<UpdatePost />} />
           <Route path='/beamblocks' element={<BeamBlockList />} />
-          <Route path='/hollow-blocks' element={<HollowBlocks />} />
-          <Route path='/paving-blocks' element={<PavingBlocks />} />
-          <Route path='/road-kerb' element={<RoadKerb />} />
-          <Route path='/services' element={<Services />} />
-          <Route path='/gallery' element={<Gallery />} />
-          <Route path='/downloads' element={<Downloads />} />
         </Routes>
       </Router>
     </AuthProvider>
