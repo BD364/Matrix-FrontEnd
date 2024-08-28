@@ -36,7 +36,6 @@ function App() {
           <Route path='/gallery' element={<Gallery />} />
           <Route path='/downloads' element={<Downloads />} />
         </Routes>
-        <ImageCarousel />
       </Router>
     </AuthProvider>
   );

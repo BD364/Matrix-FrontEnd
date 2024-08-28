@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import './beamblocksList.css';
 import { useAuth } from '../../AuthContext';
 import { FaEdit } from 'react-icons/fa';
+import Navbar from '../Navbar/Navbar';
 
 const BeamBlockList = () => {
   const [beamBlocks, setBeamBlocks] = useState([]);
   const [selectedBeamBlock, setSelectedBeamBlock] = useState(null);
   const [message, setMessage] = useState('');
   const { user } = useAuth();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBeamBlocks = async () => {
@@ -36,12 +37,20 @@ const BeamBlockList = () => {
   };
 
   const handleEditClick = (id) => {
-    navigate(`/update/${id}`); 
+    navigate(`/update/${id}`);
   };
 
   return (
     <div className='beamblock-list-container'>
-      <h2 className='beamblock-list-title'>Available BeamBlocks</h2>
+    <Navbar/>
+      <div className='introduction'>
+        <h2> BeamBlocks</h2>
+        <p>
+          Welcome to our collection of BeamBlocks! BeamBlocks are a unique and essential part of our inventory,
+          each offering distinctive features and characteristics. Browse through our selection to find the perfect 
+          BeamBlock that meets your needs.
+        </p>
+      </div>
       {message && <p className='error-message'>{message}</p>}
       <div className='beamblock-grid'>
         {beamBlocks.length > 0 ? (
@@ -67,7 +76,7 @@ const BeamBlockList = () => {
             </span>
             <FaEdit
               className='edit-icon'
-              onClick={() => handleEditClick(selectedBeamBlock.id)} 
+              onClick={() => handleEditClick(selectedBeamBlock.id)}
               title='Edit BeamBlock'
             />
             <div className='modal-body'>

@@ -5,6 +5,11 @@
   justify-content: center;
 }
 
+.login-modal form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .login-input {
   width: 100%;
   padding: 0.8rem;
@@ -21,7 +26,6 @@
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  align-self: center;
 }
 
 .login-button:disabled {

@@ -62,51 +62,59 @@ const CreatePost = () => {
     <div className="create-post-container">
       <h2>Create New Post</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <input
-          type="text"
-          name="title"
-          value={postData.title}
-          onChange={handleChange}
-          placeholder="Post Title"
-          required
-          className="input"
-        />
-        <textarea
-          name="content"
-          value={postData.content}
-          onChange={handleChange}
-          placeholder="Post Content"
-          required
-          className="textarea"
-        />
-        
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="input"
-        />
-        
-        <input
-          type="number"
-          name="price"
-          value={postData.price}
-          onChange={handleChange}
-          placeholder="Price"
-          className="input"
-          required
-        />
-        <textarea
-          name="description"
-          value={postData.description}
-          onChange={handleChange}
-          placeholder="Description"
-          className="textarea"
-        />
+        <div className="form-group">
+          <input
+            type="text"
+            name="title"
+            value={postData.title}
+            onChange={handleChange}
+            placeholder="Post Title"
+            required
+            className="input"
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            name="content"
+            value={postData.content}
+            onChange={handleChange}
+            placeholder="Post Content"
+            required
+            className="textarea"
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="file-input"
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="number"
+            name="price"
+            value={postData.price}
+            onChange={handleChange}
+            placeholder="Price"
+            className="input"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            name="description"
+            value={postData.description}
+            onChange={handleChange}
+            placeholder="Description"
+            className="textarea"
+          />
+        </div>
         <button type="submit" className="submit-button">Create Post</button>
       </form>
-      {message && <p>{message}</p>} 
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };

@@ -168,9 +168,12 @@ const Navbar = () => {
                 <FaFacebook />
               </a>
             </div>
-            <button className='sign-in-toggle' onClick={openModal}>
-              Sign In
-            </button>
+            <div>
+              <Link to='/'></Link>
+              <button className='sign-in-toogle' onClick={openModal}>
+                Sign In
+              </button>
+            </div>
           </div>
         </div>
       )}
