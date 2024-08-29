@@ -5,14 +5,16 @@ import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import Login from '../Login/Login';
 import { Link } from 'react-router-dom';
+import Modal from '../Modal';
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSignInClick = () => {
-    navigate('/login');
+  const handleLoginSuccess = () => {
+    setIsModalOpen(false);
+    navigate('/');
   };
 
   const openModal = () => {
@@ -23,6 +25,10 @@ const Navbar = () => {
     setIsModalOpen(false);
   };
 
+  const navigateToHome = () => {
+    navigate('/');
+  }
+
   return (
     <nav className='navbar'>
       <div className='logo'>
@@ -30,30 +36,45 @@ const Navbar = () => {
           className='logoImage'
           src='/src/assets/Matrixlogo.jpeg'
           alt='Matrix Precast Concrete'
+          onClick={navigateToHome}
         />
       </div>
 
       <ul className='nav-links'>
         <li>
-          <Link to='/beamblocks'>Beam & Block</Link>
+          <Link to='/beamblocks' className='hover:text-yellow-400'>
+            Beam & Block
+          </Link>
         </li>
         <li>
-          <a href='/hollow-blocks'>Hollow Blocks</a>
+          <a href='/hollow-blocks' className='hover:text-yellow-400'>
+            Hollow Blocks
+          </a>
         </li>
         <li>
-          <a href='/paving-blocks'>Paving Blocks</a>
+          <a href='/paving-blocks' className='hover:text-yellow-400'>
+            Paving Blocks
+          </a>
         </li>
         <li>
-          <a href='/road-kerb'>Road Kerb & Accessories</a>
+          <a href='/road-kerb' className='hover:text-yellow-400'>
+            Road Kerb & Accessories
+          </a>
         </li>
         <li>
-          <a href='/services'>Services</a>
+          <a href='/services' className='hover:text-yellow-400'>
+            Services
+          </a>
         </li>
         <li>
-          <a href='/gallery'>Gallery</a>
+          <a href='/gallery' className='hover:text-yellow-400'>
+            Gallery
+          </a>
         </li>
         <li>
-          <a href='/downloads'>Downloads</a>
+          <a href='/downloads' className='hover:text-yellow-400'>
+            Downloads
+          </a>
         </li>
       </ul>
 
@@ -177,16 +198,9 @@ const Navbar = () => {
           </div>
         </div>
       )}
-      {isModalOpen && (
-        <div className='modal-overlaym' onClick={closeModal}>
-          <div className='modal-contentm' onClick={(e) => e.stopPropagation()}>
-            <button className='close-btnm' onClick={closeModal}>
-              &times;
-            </button>
-            <Login closeModal={closeModal} />
-          </div>
-        </div>
-      )}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <Login onSuccess={handleLoginSuccess} />
+      </Modal>
     </nav>
   );
 };

@@ -1,45 +1,35 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../AuthContext';
 import { useNavigate } from 'react-router-dom';
-import './createPost.css';
+import { useForm } from 'react-hook-form';
+import Navbar from '../Navbar/Navbar';
 
 const CreatePost = () => {
-  const { token, api } = useAuth(); 
-  const [postData, setPostData] = useState({
-    title: '',
-    content: '',
-    price: '',
-    description: ''
-  });
-  const [imageFile, setImageFile] = useState(null); 
+  const { token, api } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [imageFile, setImageFile] = useState(null);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPostData({
-      ...postData,
-      [name]: value,
-    });
-  };
 
   const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data) => {
     if (!token || !api) {
       setMessage('Authentication or API setup is missing.');
       return;
     }
 
     const formData = new FormData();
-    formData.append('title', postData.title);
-    formData.append('content', postData.content);
-    formData.append('price', postData.price);
-    formData.append('description', postData.description);
+    formData.append('title', data.title);
+    formData.append('content', data.content);
+    formData.append('price', data.price);
+    formData.append('description', data.description);
     if (imageFile) {
       formData.append('image', imageFile);
     }
@@ -52,69 +42,91 @@ const CreatePost = () => {
         },
       });
       setMessage('Post created successfully! Redirecting to home page...');
-      setTimeout(() => navigate('/'), 2000); 
+      setTimeout(() => navigate('/'), 2000);
     } catch (error) {
-      setMessage('Error creating post: ' + (error.response ? error.response.data.message : error.message));
+      setMessage(
+        'Error creating post: ' +
+          (error.response ? error.response.data.message : error.message)
+      );
     }
   };
 
   return (
-    <div className="create-post-container">
-      <h2>Create New Post</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="form-group">
-          <input
-            type="text"
-            name="title"
-            value={postData.title}
-            onChange={handleChange}
-            placeholder="Post Title"
-            required
-            className="input"
-          />
-        </div>
-        <div className="form-group">
-          <textarea
-            name="content"
-            value={postData.content}
-            onChange={handleChange}
-            placeholder="Post Content"
-            required
-            className="textarea"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="file-input"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="number"
-            name="price"
-            value={postData.price}
-            onChange={handleChange}
-            placeholder="Price"
-            className="input"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <textarea
-            name="description"
-            value={postData.description}
-            onChange={handleChange}
-            placeholder="Description"
-            className="textarea"
-          />
-        </div>
-        <button type="submit" className="submit-button">Create Post</button>
-      </form>
-      {message && <p className="message">{message}</p>}
+    <div className='min-h-screen bg-gray-100'>
+      <Navbar className='w-full fixed top-0 left-0 z-50 bg-white shadow-md' />
+
+      <div className='max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-16'>
+        <h2 className='text-3xl font-semibold mb-6 text-center'>
+          Create New Post
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
+          <div className='mb-4'>
+            <input
+              type='text'
+              {...register('title', { required: 'Title is required' })}
+              placeholder='Post Title'
+              className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+            {errors.title && (
+              <p className='text-red-500'>{errors.title.message}</p>
+            )}
+          </div>
+
+          <div className='mb-4'>
+            <textarea
+              {...register('content', { required: 'Content is required' })}
+              placeholder='Post Content'
+              className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+            {errors.content && (
+              <p className='text-red-500'>{errors.content.message}</p>
+            )}
+          </div>
+
+          <div className='mb-4 relative'>
+            <input
+              type='file'
+              id='file-upload'
+              onChange={handleImageChange}
+              className='absolute inset-0 opacity-0 cursor-pointer'
+            />
+            <label
+              htmlFor='file-upload'
+              className='block w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-blue-500 text-center cursor-pointer hover:bg-gray-200'
+            >
+              Choose file
+            </label>
+          </div>
+
+          <div className='mb-4'>
+            <input
+              type='number'
+              {...register('price', { required: 'Price is required' })}
+              placeholder='Price'
+              className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+            {errors.price && (
+              <p className='text-red-500'>{errors.price.message}</p>
+            )}
+          </div>
+
+          <div className='mb-4'>
+            <textarea
+              {...register('description')}
+              placeholder='Description'
+              className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+          </div>
+
+          <button
+            type='submit'
+            className='w-full py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 transition-colors'
+          >
+            Create Post
+          </button>
+        </form>
+        {message && <p className='mt-4 text-center text-red-500'>{message}</p>}
+      </div>
     </div>
   );
 };
