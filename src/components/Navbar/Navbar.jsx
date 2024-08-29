@@ -3,14 +3,31 @@ import './navbar.css';
 import { FaInstagram, FaTwitter, FaWhatsapp, FaFacebook } from 'react-icons/fa';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import Login from '../Login/Login';
+import { Link } from 'react-router-dom';
+import Modal from '../Modal';
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignInClick = () => {
-    navigate('/login');
+  const handleLoginSuccess = () => {
+    setIsModalOpen(false);
+    navigate('/');
   };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const navigateToHome = () => {
+    navigate('/');
+  }
 
   return (
     <nav className='navbar'>
@@ -19,30 +36,45 @@ const Navbar = () => {
           className='logoImage'
           src='/src/assets/Matrixlogo.jpeg'
           alt='Matrix Precast Concrete'
+          onClick={navigateToHome}
         />
       </div>
 
       <ul className='nav-links'>
         <li>
-          <a href='/beam-block'>Beam & Block</a>
+          <Link to='/beamblocks' className='hover:text-yellow-400'>
+            Beam & Block
+          </Link>
         </li>
         <li>
-          <a href='/hollow-blocks'>Hollow Blocks</a>
+          <a href='/hollow-blocks' className='hover:text-yellow-400'>
+            Hollow Blocks
+          </a>
         </li>
         <li>
-          <a href='/paving-blocks'>Paving Blocks</a>
+          <a href='/paving-blocks' className='hover:text-yellow-400'>
+            Paving Blocks
+          </a>
         </li>
         <li>
-          <a href='/road-kerb'>Road Kerb & Accessories</a>
+          <a href='/road-kerb' className='hover:text-yellow-400'>
+            Road Kerb & Accessories
+          </a>
         </li>
         <li>
-          <a href='/services'>Services</a>
+          <a href='/services' className='hover:text-yellow-400'>
+            Services
+          </a>
         </li>
         <li>
-          <a href='/gallery'>Gallery</a>
+          <a href='/gallery' className='hover:text-yellow-400'>
+            Gallery
+          </a>
         </li>
         <li>
-          <a href='/downloads'>Downloads</a>
+          <a href='/downloads' className='hover:text-yellow-400'>
+            Downloads
+          </a>
         </li>
       </ul>
 
@@ -77,9 +109,12 @@ const Navbar = () => {
             <FaFacebook />
           </a>
         </div>
-        <button className='sign-in' onClick={handleSignInClick}>
-          Sign In
-        </button>
+        <div>
+          <Link to='/'></Link>
+          <button className='sign-in' onClick={openModal}>
+            Sign In
+          </button>
+        </div>
 
         <div className='navbarMenu'>
           {toggleMenu ? (
@@ -154,12 +189,18 @@ const Navbar = () => {
                 <FaFacebook />
               </a>
             </div>
-            <button className='sign-in-toggle' onClick={handleSignInClick}>
-              Sign In
-            </button>
+            <div>
+              <Link to='/'></Link>
+              <button className='sign-in-toogle' onClick={openModal}>
+                Sign In
+              </button>
+            </div>
           </div>
         </div>
       )}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <Login onSuccess={handleLoginSuccess} />
+      </Modal>
     </nav>
   );
 };

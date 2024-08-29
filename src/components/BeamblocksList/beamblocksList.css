@@ -1,0 +1,136 @@
+.beamblock-list-container {
+  background-color: #f4f4f4;
+}
+
+.introduction {
+  margin-bottom: 30px;
+  padding: 30px;
+  background: linear-gradient(135deg, #ffffff, #f0f4f8);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.introduction h2 {
+  margin-top: 0;
+  font-size: 28px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.introduction p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+.beamblock-list-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #333;
+}
+
+.beamblock-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.beamblock-image {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 8px;
+}
+
+.beamblock-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.no-data-message {
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+}
+
+.beamblock-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 80%;
+  max-width: 1000px;
+  display: flex;
+  position: relative;
+}
+
+.modal-body {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-image {
+  width: 40%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.modal-details {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-details h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.modal-price {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: auto;
+  color: #333;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  font-size: 24px;
+  color: #007bff;
+  cursor: pointer;
+}
