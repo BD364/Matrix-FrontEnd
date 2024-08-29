@@ -66,7 +66,7 @@ const UpdatePost = () => {
     }
 
     try {
-      const response = await api.put(`/update/${postId}`, formData, {
+      const response = await api.put(`/update/beamblock/${postId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

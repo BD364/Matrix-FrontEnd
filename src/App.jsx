@@ -18,8 +18,8 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/create' element={<CreatePost />} />
-          <Route path='/update/:postId' element={<UpdatePost />} />
+          <Route path='/create/beamblock' element={<CreatePost />} />
+          <Route path='/update/beamblock/:postId' element={<UpdatePost />} />
           <Route path='/beamblocks' element={<BeamBlockList />} />
         </Routes>
       </Router>

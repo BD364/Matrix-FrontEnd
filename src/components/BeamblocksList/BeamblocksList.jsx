@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import Navbar from '../Navbar/Navbar';
-import { Edit } from '../Icons';
+import { Edit, Plus } from '../Icons';
 
 const BeamBlockList = () => {
   const [beamBlocks, setBeamBlocks] = useState([]);
@@ -16,7 +16,7 @@ const BeamBlockList = () => {
       try {
         const response = await fetch('http://localhost:5000/beamblocks');
         const data = await response.json();
-        // console.log(data);
+        console.log(data)
         setBeamBlocks(data.beamblocks);
       } catch (error) {
         setMessage(
@@ -37,7 +37,11 @@ const BeamBlockList = () => {
   };
 
   const handleEditClick = (id) => {
-    navigate(`/update/${id}`);
+    navigate(`/update/beamblock/${id}`);
+  };
+
+  const handleAddClick = () => {
+    navigate('/create/beamblock'); 
   };
 
   return (
@@ -134,6 +138,14 @@ const BeamBlockList = () => {
           </div>
         </div>
       )}
+
+      <button
+        onClick={handleAddClick}
+        className='fixed bottom-10 right-10 bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center'
+        aria-label='Add BeamBlock'
+      >
+        <Plus className='w-8 h-8 stroke-white hover:stroke-yellow-500' />
+      </button>
     </div>
   );
 };
