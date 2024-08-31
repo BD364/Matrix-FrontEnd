@@ -16,7 +16,7 @@ const BeamBlockList = () => {
       try {
         const response = await fetch('http://localhost:5000/beamblocks');
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         setBeamBlocks(data.beamblocks);
       } catch (error) {
         setMessage(
@@ -41,7 +41,7 @@ const BeamBlockList = () => {
   };
 
   const handleAddClick = () => {
-    navigate('/create/beamblock'); 
+    navigate('/create/beamblock');
   };
 
   return (
@@ -50,7 +50,7 @@ const BeamBlockList = () => {
       <header className='w-full h-[75vh] relative'>
         <div
           className='absolute inset-0 bg-cover bg-center'
-          style={{ backgroundImage: 'url(/src/assets/images/beam1.jpg)' }}
+          style={{ backgroundImage: 'url(/assets/images/beam1.jpg)' }}
         >
           <div className='absolute inset-0 bg-black opacity-50'></div>
         </div>

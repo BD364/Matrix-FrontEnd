@@ -27,14 +27,14 @@ const Navbar = () => {
 
   const navigateToHome = () => {
     navigate('/');
-  }
+  };
 
   return (
     <nav className='navbar'>
       <div className='logo'>
         <img
           className='logoImage'
-          src='/src/assets/Matrixlogo.jpeg'
+          src='/assets/Matrixlogo.jpeg'
           alt='Matrix Precast Concrete'
           onClick={navigateToHome}
         />
