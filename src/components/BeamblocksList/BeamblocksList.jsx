@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import Navbar from '../Navbar/Navbar';
 import { Edit, Plus } from '../Icons';
+import Api from '../../utils/Api';
 
 const BeamBlockList = () => {
   const [beamBlocks, setBeamBlocks] = useState([]);
@@ -14,9 +15,8 @@ const BeamBlockList = () => {
   useEffect(() => {
     const fetchBeamBlocks = async () => {
       try {
-        const response = await fetch('http://localhost:5000/beamblocks');
-        const data = await response.json();
-        console.log(data);
+        const { data } = await Api.api.get(Api.END_POINTS.BEAMBLOCKS);
+        // console.log(data);
         setBeamBlocks(data.beamblocks);
       } catch (error) {
         setMessage(

@@ -8,6 +8,7 @@ import Login from './components/Login/Login.jsx';
 import CreatePost from './components/Create/CreatePost.jsx';
 import UpdatePost from './components/UpdatePost/UpdatePost.jsx';
 import BeamBlockList from './components/BeamblocksList/BeamblocksList.jsx';
+import BeamBlockDetail from './components/BeamblockDetail/BeamblockDetail.jsx';
 import './index.css';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path='/create/beamblock' element={<CreatePost />} />
           <Route path='/update/beamblock/:postId' element={<UpdatePost />} />
           <Route path='/beamblocks' element={<BeamBlockList />} />
+          <Route path='/beamblock/:postId' element={<BeamBlockDetail />} />
         </Routes>
       </Router>
     </AuthProvider>
