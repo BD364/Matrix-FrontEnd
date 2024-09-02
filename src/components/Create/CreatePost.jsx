@@ -3,6 +3,7 @@ import { useAuth } from '../../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Navbar from '../Navbar/Navbar';
+import Api from '../../utils/Api';
 
 const CreatePost = () => {
   const { token, api } = useAuth();
@@ -35,7 +36,7 @@ const CreatePost = () => {
     }
 
     try {
-      const response = await api.post('/create/beamblock', formData, {
+      const {data} = await Api.api.post(Api.END_POINTS.CREATEBEAMBLOCK, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './beamBlockDetail.css';
-import { FaEdit } from 'react-icons/fa';
+import Api from '../../utils/Api';
 
 const BeamBlockDetail = () => {
   const { postId } = useParams();
@@ -19,8 +19,8 @@ const BeamBlockDetail = () => {
   useEffect(() => {
     const fetchBeamBlock = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/beamblock/${postId}`);
-        const data = await response.json();
+        const {data} = await Api.api.get(Api.END_POINTS.SINGLEBEAMBLOCK(postId));
+        // const data = await response.json();
         setBeamBlock(data);
         setEditDetails({
           title: data.title,

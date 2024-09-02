@@ -3,6 +3,7 @@ import { useAuth } from '../../AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Navbar from '../Navbar/Navbar';
+import Api from '../../utils/Api';
 
 const UpdatePost = () => {
   const { postId } = useParams();
@@ -29,16 +30,19 @@ const UpdatePost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await api.get(`/beamblock/${postId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setPostData(response.data);
-        setValue('title', response.data.title);
-        setValue('content', response.data.content);
-        setValue('price', response.data.price);
-        setValue('description', response.data.description);
+        const { data } = await Api.api.get(
+          Api.END_POINTS.SINGLEBEAMBLOCK(postId),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setPostData(data);
+        setValue('title', data.title);
+        setValue('content', data.content);
+        setValue('price', data.price);
+        setValue('description', data.description);
       } catch (error) {
         console.error(
           'Error fetching post:',
@@ -66,15 +70,23 @@ const UpdatePost = () => {
     }
 
     try {
-      const response = await api.put(`/update/beamblock/${postId}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      setPostData(response.data.beamblock);
-      setMessage('Post updated successfully! Redirecting to home page...');
-      setTimeout(() => navigate('/beamblocks'), 2000);
+      const response = await Api.api.put(
+        Api.END_POINTS.UPDATEBEAMBLOCK(postId),
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      if (response?.data) {
+        setPostData(response.data.beamblock);
+        setMessage('Post updated successfully! Redirecting to home page...');
+        setTimeout(() => navigate('/beamblocks'), 2000);
+      } else {
+        setMessage('Unexpected response format.');
+      }
     } catch (error) {
       setMessage(
         'Error updating post: ' +
@@ -154,7 +166,7 @@ const UpdatePost = () => {
           <div className='mt-6 text-center'>
             <h3 className='text-lg font-semibold mb-2'>Current Image:</h3>
             <img
-              src={`http://localhost:5000/static${postData.image_url}`}
+              src={`${Api.BASE_URL}/static${postData.image_url}`}
               alt='Current Post'
               className='max-w-full h-auto rounded-md border border-gray-300'
             />
