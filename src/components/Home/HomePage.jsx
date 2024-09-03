@@ -11,6 +11,10 @@ const HomePage = () => {
     navigate('/beamblocks');
   };
 
+  const handleHollowBlocks = () => {
+    navigate('/hollowblocks');
+  };
+
   return (
     <div className='min-h-screen bg-gray-100'>
       <Navbar className='w-full fixed top-0 z-10' />
@@ -70,7 +74,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'>
+          <div className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer' onClick={handleHollowBlocks}>
             <img
               src='/assets/images/block3.jpg'
               alt='Beam & Block System'
