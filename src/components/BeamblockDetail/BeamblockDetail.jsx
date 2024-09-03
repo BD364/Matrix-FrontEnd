@@ -19,8 +19,7 @@ const BeamBlockDetail = () => {
   useEffect(() => {
     const fetchBeamBlock = async () => {
       try {
-        const {data} = await Api.api.get(Api.END_POINTS.SINGLEBEAMBLOCK(postId));
-        // const data = await response.json();
+        const { data } = await Api.api.get(Api.END_POINTS.SINGLEBEAMBLOCK(postId));
         setBeamBlock(data);
         setEditDetails({
           title: data.title,
@@ -47,14 +46,7 @@ const BeamBlockDetail = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/beamblock/${postId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editDetails),
-      });
-      const data = await response.json();
+      const { data } = await Api.api.put(Api.END_POINTS.UPDATEBEAMBLOCK(postId), editDetails);
       setBeamBlock(data);
       setMessage('BeamBlock updated successfully!');
       setIsEditing(false);
@@ -74,7 +66,7 @@ const BeamBlockDetail = () => {
         <>
           <div className='beamblock-content'>
             <img
-              src={`http://localhost:5000/${beamBlock.image_url}`}
+              src={`${Api.BASE_URL}/${beamBlock.image_url}`} 
               alt={beamBlock.title}
               className='beamblock-image'
             />

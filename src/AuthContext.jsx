@@ -28,13 +28,14 @@ export const AuthProvider = ({ children }) => {
       setRefreshToken(response.data.refresh_token);
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refreshToken', response.data.refresh_token);
-      // console.log('Access:', response.data.access_token);
-      // console.log('Refresh:', response.data.refresh_token);
+      console.log('Access:', response.data.access_token);
+      console.log('Refresh:', response.data.refresh_token);
     } catch (error) {
-      console.error(
-        'Error logging in:',
-        error.response ? error.response.data : error.message
-      );
+      if (error.response) {
+        console.error('Login failed:', error.response.data.message);
+      } else {
+        console.error('Network error:', error.message);
+      }
     }
   };
 

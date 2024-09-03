@@ -1,10 +1,12 @@
 import axios from 'axios';
 
 const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+// const IS_DEV = false
+
 
 const BASE_URL = IS_DEV
   ? 'http://localhost:5000/'
-  : 'https://api-matrix.bitsnke.co.ke/';
+  : 'https://matrixprecastconcrete.co.ke/api/';
 
 const api = axios.create({
   baseURL: BASE_URL,
