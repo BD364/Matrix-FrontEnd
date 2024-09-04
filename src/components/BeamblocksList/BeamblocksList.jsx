@@ -81,7 +81,7 @@ const BeamBlockList = () => {
               onClick={() => handleImageClick(beamBlock)}
             >
               <img
-                src={`${Api.BASE_URL}/${beamBlock.image_url}`}
+                src={`${Api.BASE_URL}${beamBlock.image_url}`}
                 alt={beamBlock.title}
                 className='w-full h-64 object-cover transition-transform transform group-hover:scale-105'
               />
@@ -103,7 +103,7 @@ const BeamBlockList = () => {
         <div className='fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50'>
           <div className='bg-white rounded-lg shadow-xl overflow-hidden w-full xl:w-2/3 relative flex'>
             <img
-              src={`${Api.BASE_URL}/${selectedBeamBlock.image_url}`}
+              src={`${Api.BASE_URL}${selectedBeamBlock.image_url}`}
               alt={selectedBeamBlock.title}
               className='w-full lg:w-1/2 h-full object-cover'
             />

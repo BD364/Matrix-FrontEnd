@@ -49,7 +49,7 @@ const HollowBlockList = () => {
       <header className='w-full h-[75vh] relative'>
         <div
           className='absolute inset-0 bg-cover bg-center'
-          style={{ backgroundImage: 'url(/assets/images/hollowblock.jpg)' }}
+          style={{ backgroundImage: 'url(assets/images/hollow.jpeg)' }}
         >
           <div className='absolute inset-0 bg-black opacity-50'></div>
         </div>
@@ -77,7 +77,7 @@ const HollowBlockList = () => {
               onClick={() => handleImageClick(hollowBlock)}
             >
               <img
-                src={`${Api.BASE_URL}/${hollowBlock.image_url}`}
+                src={`${Api.BASE_URL}${hollowBlock.image_url}`}
                 alt={hollowBlock.title}
                 className='w-full h-64 object-cover transition-transform transform group-hover:scale-105'
               />
@@ -99,7 +99,7 @@ const HollowBlockList = () => {
         <div className='fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50'>
           <div className='bg-white rounded-lg shadow-xl overflow-hidden w-full xl:w-2/3 relative flex'>
             <img
-              src={`${Api.BASE_URL}/${selectedHollowBlock.image_url}`}
+              src={`${Api.BASE_URL}${selectedHollowBlock.image_url}`}
               alt={selectedHollowBlock.title}
               className='w-full lg:w-1/2 h-full object-cover'
             />

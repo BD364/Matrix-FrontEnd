@@ -1,65 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../AuthContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Navbar from '../Navbar/Navbar';
 import Api from '../../utils/Api';
 
-const UpdatePost = () => {
-  const { postId } = useParams();
-  const { api, token } = useAuth();
-  const [postData, setPostData] = useState(null);
+const CreateBeamBlock = () => {
+  const { token, api } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [imageFile, setImageFile] = useState(null);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      title: '',
-      content: '',
-      price: '',
-      description: '',
-    },
-  });
-
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const { data } = await Api.api.get(
-          Api.END_POINTS.SINGLEBEAMBLOCK(postId),
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setPostData(data);
-        setValue('title', data.title);
-        setValue('content', data.content);
-        setValue('price', data.price);
-        setValue('description', data.description);
-      } catch (error) {
-        console.error(
-          'Error fetching post:',
-          error.response ? error.response.data : error.message
-        );
-        setMessage('Error fetching post.');
-      }
-    };
-
-    fetchPost();
-  }, [postId, api, token, setValue]);
-
-  const handleFileChange = (e) => {
+  const handleImageChange = (e) => {
     setImageFile(e.target.files[0]);
   };
 
   const onSubmit = async (data) => {
+    if (!token || !api) {
+      setMessage('Authentication or API setup is missing.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('title', data.title);
     formData.append('content', data.content);
@@ -70,37 +36,30 @@ const UpdatePost = () => {
     }
 
     try {
-      const response = await Api.api.put(
-        Api.END_POINTS.UPDATEBEAMBLOCK(postId),
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      if (response?.data) {
-        setPostData(response.data.beamblock);
-        setMessage('Post updated successfully! Redirecting to home page...');
-        setTimeout(() => navigate('/beamblocks'), 2000);
-      } else {
-        setMessage('Unexpected response format.');
-      }
+      const {data} = await Api.api.post(Api.END_POINTS.CREATEBEAMBLOCK, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setMessage('Post created successfully! Redirecting to home page...');
+      setTimeout(() => navigate('/'), 2000);
     } catch (error) {
       setMessage(
-        'Error updating post: ' +
-          (error.response ? error.response.data : error.message)
+        'Error creating post: ' +
+          (error.response ? error.response.data.message : error.message)
       );
     }
   };
 
   return (
-    <div className='bg-gray-100 min-h-screen '>
+    <div className='min-h-screen bg-gray-100'>
       <Navbar className='w-full fixed top-0 left-0 z-50 bg-white shadow-md' />
-      <div className='pt-16 max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg'>
-        <h2 className='text-2xl font-semibold mb-4'>Update Post</h2>
-        {message && <p className='mb-4 text-red-500'>{message}</p>}
+
+      <div className='max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-16'>
+        <h2 className='text-3xl font-semibold mb-6 text-center'>
+          Create New Post
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
           <div className='mb-4'>
             <input
@@ -113,6 +72,7 @@ const UpdatePost = () => {
               <p className='text-red-500'>{errors.title.message}</p>
             )}
           </div>
+
           <div className='mb-4'>
             <textarea
               {...register('content', { required: 'Content is required' })}
@@ -123,11 +83,12 @@ const UpdatePost = () => {
               <p className='text-red-500'>{errors.content.message}</p>
             )}
           </div>
+
           <div className='mb-4 relative'>
             <input
               type='file'
               id='file-upload'
-              onChange={handleFileChange}
+              onChange={handleImageChange}
               className='absolute inset-0 opacity-0 cursor-pointer'
             />
             <label
@@ -137,6 +98,7 @@ const UpdatePost = () => {
               Choose file
             </label>
           </div>
+
           <div className='mb-4'>
             <input
               type='number'
@@ -148,6 +110,7 @@ const UpdatePost = () => {
               <p className='text-red-500'>{errors.price.message}</p>
             )}
           </div>
+
           <div className='mb-4'>
             <textarea
               {...register('description')}
@@ -155,26 +118,18 @@ const UpdatePost = () => {
               className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
           </div>
+
           <button
             type='submit'
             className='w-full py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 transition-colors'
           >
-            Update Post
+            Create Post
           </button>
         </form>
-        {postData?.image_url && (
-          <div className='mt-6 text-center'>
-            <h3 className='text-lg font-semibold mb-2'>Current Image:</h3>
-            <img
-              src={`${Api.BASE_URL}/static${postData.image_url}`}
-              alt='Current Post'
-              className='max-w-full h-auto rounded-md border border-gray-300'
-            />
-          </div>
-        )}
+        {message && <p className='mt-4 text-center text-green-500'>{message}</p>}
       </div>
     </div>
   );
 };
 
-export default UpdatePost;
+export default CreateBeamBlock;

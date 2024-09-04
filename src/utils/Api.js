@@ -3,7 +3,6 @@ import axios from 'axios';
 const IS_DEV = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 // const IS_DEV = false
 
-
 const BASE_URL = IS_DEV
   ? 'http://localhost:5000/'
   : 'https://matrixprecastconcrete.co.ke/api/';
@@ -75,9 +74,13 @@ export default {
   END_POINTS: {
     LOGIN: '/login',
     REGISTER: '/register',
+    CREATEBEAMBLOCK: `/create/beamblock`,
     BEAMBLOCKS: '/beamblocks',
     SINGLEBEAMBLOCK: (id) => `/beamblock/${id}`,
     UPDATEBEAMBLOCK: (id) => `/update/beamblock/${id}`,
-    CREATEBEAMBLOCK: `/create/beamblock`,
+    CREATEHOLLOWBLOCK: `/create/hollowblock`,
+    HOLLOWBLOCKS: `/hollowblocks`,
+    SINGLEHOLLOWBLOCK: (id) => `/hollowblock/${id}`,
+    UPDATEHOLLOWBLOCK: (id) => `/update/hollowblock/${id}`,
   },
 };
