@@ -82,5 +82,9 @@ export default {
     HOLLOWBLOCKS: `/hollowblocks`,
     SINGLEHOLLOWBLOCK: (id) => `/hollowblock/${id}`,
     UPDATEHOLLOWBLOCK: (id) => `/update/hollowblock/${id}`,
+    CREATEPAVINGBLOCK: `/create/pavingblock`,
+    PAVINGBLOCKS: '/pavingblocks',
+    SINGLEPAVINGBLOCK: (id) => `/pavingblock/${id}`,
+    UPDATEPAVINGBLOCK: (id) => `/update/pavingblock/${id}`,
   },
 };

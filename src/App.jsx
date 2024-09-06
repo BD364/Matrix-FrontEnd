@@ -13,6 +13,10 @@ import CreateHollowBlock from './components/CreateHollowBlock/CreateHollowBlock.
 import HollowBlockList from './components/HollowBlocksList/HollowBlockslList.jsx';
 import HollowBlockDetail from './components/SingleHollowBlock/HollowBlockDetail.jsx';
 import UpdateHollowBlock from './components/UpdateHollowBlock/UpdateHollowBlock.jsx';
+import CreatePavingBlock from './components/CreatePavingBlock/CreatePavingBlock.jsx';
+import PavingBlockList from './components/PavingBlocksList/PavingBlocksList.jsx';
+import PavingBlockDetail from './components/SinglePavingBlock/SinglePavingBlock.jsx';
+import UpdatePavingBlock from './components/UpdatePavingBlock/UpdatePavingBlock.jsx';
 import './index.css';
 
 function App() {
@@ -36,6 +40,13 @@ function App() {
           <Route
             path='/update/hollowblock/:postId'
             element={<UpdateHollowBlock />}
+          />
+          <Route path='/create/pavingblock' element={<CreatePavingBlock />} />
+          <Route path='/pavingblocks' element={<PavingBlockList />} />
+          <Route path='/pavingblock/:postId' element={<PavingBlockDetail />} />
+          <Route
+            path='/update/pavingblock/:postId'
+            element={<UpdatePavingBlock />}
           />
         </Routes>
       </Router>
