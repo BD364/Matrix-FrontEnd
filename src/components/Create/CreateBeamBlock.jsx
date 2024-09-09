@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Navbar from '../Navbar/Navbar';
 import Api from '../../utils/Api';
+import Footer from '../Footer/Footer';
 
 const CreateBeamBlock = () => {
   const { token, api } = useAuth();
@@ -42,8 +43,8 @@ const CreateBeamBlock = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setMessage('Post created successfully! Redirecting to home page...');
-      setTimeout(() => navigate('/'), 2000);
+      setMessage('Post created successfully!');
+      setTimeout(() => navigate('/beamblocks'), 2000);
     } catch (error) {
       setMessage(
         'Error creating post: ' +
@@ -128,6 +129,7 @@ const CreateBeamBlock = () => {
         </form>
         {message && <p className='mt-4 text-center text-green-500'>{message}</p>}
       </div>
+      <Footer/>
     </div>
   );
 };

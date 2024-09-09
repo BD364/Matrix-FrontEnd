@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Navbar from '../Navbar/Navbar';
 import Api from '../../utils/Api';
+import Footer from '../Footer/Footer';
+
 
 const UpdateHollowBlock = () => {
   const { postId } = useParams();
@@ -160,6 +162,7 @@ const UpdateHollowBlock = () => {
           </div>
         )}
       </div>
+      <Footer/>
     </div>
   );
 };

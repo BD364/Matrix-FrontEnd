@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './homepage.css';
 import Navbar from '../Navbar/Navbar';
 import { ArrowIcon } from '../Icons';
+import Footer from '../Footer/Footer';
+
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -17,6 +19,14 @@ const HomePage = () => {
 
   const handlePavingBlocks = () => {
     navigate('/pavingblocks');
+  };
+
+  const handleRoadKerbs = () => {
+    navigate('/roadkerbs');
+  };
+
+  const handleGallery = () => {
+    navigate('/gallery');
   };
 
   return (
@@ -127,7 +137,10 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'>
+          <div
+            className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'
+            onClick={handleRoadKerbs}
+          >
             <img
               src='assets/images/beam5.jpg'
               alt='Beam & Block System'
@@ -167,7 +180,10 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'>
+          <div
+            className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'
+            onClick={handleGallery}
+          >
             <img
               src='assets/images/gallery.jpg'
               alt='Beam & Block System'
@@ -187,6 +203,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Navbar from '../Navbar/Navbar';
 import Api from '../../utils/Api';
+import Footer from '../Footer/Footer';
 
 const CreatePavingBlock = () => {
   const { token, api } = useAuth();
@@ -42,7 +43,7 @@ const CreatePavingBlock = () => {
         },
       });
       setMessage('Paving Block created successfully! Redirecting to home page...');
-      setTimeout(() => navigate('/'), 2000);
+      setTimeout(() => navigate('/pavingblocks'), 2000);
     } catch (error) {
       setMessage(
         'Error creating paving block: ' +
@@ -116,6 +117,7 @@ const CreatePavingBlock = () => {
         </form>
         {message && <p className='mt-4 text-center text-green-500'>{message}</p>}
       </div>
+      <Footer/>
     </div>
   );
 };

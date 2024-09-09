@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './beamBlockDetail.css';
 import Api from '../../utils/Api';
+import Footer from '../Footer/Footer';
 
 const BeamBlockDetail = () => {
   const { postId } = useParams();
@@ -133,6 +134,7 @@ const BeamBlockDetail = () => {
       ) : (
         <p>Loading...</p>
       )}
+      <Footer/>
     </div>
   );
 };

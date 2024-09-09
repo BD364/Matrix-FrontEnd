@@ -39,8 +39,33 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
+  const handleLogout = async () => {
+    try {
+      const response = await Api.api.post(Api.END_POINTS.LOGOUT, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        setToken(null);
+        setRefreshToken(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        console.log('Logged out successfully');
+        navigate('/');
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
+  
+
   return (
-    <AuthContext.Provider value={{ register, login, token, api: Api.api }}>
+    <AuthContext.Provider value={{ register, login, handleLogout, token, api: Api.api }}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './hollowBlockDetail.css';
 import Api from '../../utils/Api';
+import Footer from '../Footer/Footer';
+
 
 const HollowBlockDetail = () => {
   const { postId } = useParams();
@@ -133,6 +135,7 @@ const HollowBlockDetail = () => {
       ) : (
         <p>Loading...</p>
       )}
+      <Footer/>
     </div>
   );
 };

@@ -6,7 +6,7 @@ import Navbar from '../Navbar/Navbar';
 import Api from '../../utils/Api';
 import Footer from '../Footer/Footer';
 
-const CreateHollowBlock = () => {
+const CreateGallery = () => {
   const { token, api } = useAuth();
   const {
     register,
@@ -29,24 +29,22 @@ const CreateHollowBlock = () => {
 
     const formData = new FormData();
     formData.append('title', data.title);
-    formData.append('price', data.price);
-    formData.append('description', data.description);
     if (imageFile) {
       formData.append('image', imageFile);
     }
 
     try {
-      const { data } = await Api.api.post(Api.END_POINTS.CREATEHOLLOWBLOCK, formData, {
+      const { data } = await Api.api.post(Api.END_POINTS.CREATEGALLERY, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
-      setMessage('Hollow Block created successfully!');
-      setTimeout(() => navigate('/hollowblocks'), 2000);
+      setMessage('Gallery item created successfully!');
+      setTimeout(() => navigate('/gallery'), 2000);
     } catch (error) {
       setMessage(
-        'Error creating post: ' +
+        'Error creating gallery: ' +
           (error.response ? error.response.data.message : error.message)
       );
     }
@@ -58,14 +56,14 @@ const CreateHollowBlock = () => {
 
       <div className='max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-16'>
         <h2 className='text-3xl font-semibold mb-6 text-center'>
-          Create New Hollow Block
+          Create New Gallery Item
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
           <div className='mb-4'>
             <input
               type='text'
               {...register('title', { required: 'Title is required' })}
-              placeholder='Hollow Block Title'
+              placeholder='Gallery Title'
               className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
             {errors.title && (
@@ -88,31 +86,11 @@ const CreateHollowBlock = () => {
             </label>
           </div>
 
-          <div className='mb-4'>
-            <input
-              type='number'
-              {...register('price', { required: 'Price is required' })}
-              placeholder='Price'
-              className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
-            />
-            {errors.price && (
-              <p className='text-red-500'>{errors.price.message}</p>
-            )}
-          </div>
-
-          <div className='mb-4'>
-            <textarea
-              {...register('description')}
-              placeholder='Description'
-              className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
-            />
-          </div>
-
           <button
             type='submit'
             className='w-full py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 transition-colors'
           >
-            Create Hollow Block
+            Create Gallery Item
           </button>
         </form>
         {message && <p className='mt-4 text-center text-green-500'>{message}</p>}
@@ -122,4 +100,4 @@ const CreateHollowBlock = () => {
   );
 };
 
-export default CreateHollowBlock;
+export default CreateGallery;

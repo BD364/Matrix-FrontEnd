@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Api from '../../utils/Api';
 import Footer from '../Footer/Footer';
 
 
-const PavingBlockDetail = () => {
+const RoadKerbDetail = () => {
   const { postId } = useParams();
-  const [pavingBlock, setPavingBlock] = useState(null);
+  const [roadKerb, setRoadKerb] = useState(null);
   const [message, setMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editDetails, setEditDetails] = useState({
@@ -14,15 +14,14 @@ const PavingBlockDetail = () => {
     description: '',
     price: '',
   });
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPavingBlock = async () => {
+    const fetchRoadKerb = async () => {
       try {
         const { data } = await Api.api.get(
-          Api.END_POINTS.SINGLEPAVINGBLOCK(postId)
+          Api.END_POINTS.SINGLEROADKERB(postId)
         );
-        setPavingBlock(data);
+        setRoadKerb(data);
         setEditDetails({
           title: data.title,
           description: data.description,
@@ -30,12 +29,12 @@ const PavingBlockDetail = () => {
         });
       } catch (error) {
         setMessage(
-          'Error fetching PavingBlock: ' + (error.message || 'Unknown error')
+          'Error fetching Road Kerb: ' + (error.message || 'Unknown error')
         );
       }
     };
 
-    fetchPavingBlock();
+    fetchRoadKerb();
   }, [postId]);
 
   const handleEditChange = (e) => {
@@ -50,15 +49,15 @@ const PavingBlockDetail = () => {
     e.preventDefault();
     try {
       const { data } = await Api.api.put(
-        Api.END_POINTS.UPDATEPAVINGBLOCK(postId),
+        Api.END_POINTS.UPDATEROADKERB(postId),
         editDetails
       );
-      setPavingBlock(data);
-      setMessage('PavingBlock updated successfully!');
+      setRoadKerb(data);
+      setMessage('Road Kerb updated successfully!');
       setIsEditing(false);
     } catch (error) {
       setMessage(
-        'Error updating PavingBlock: ' + (error.message || 'Unknown error')
+        'Error updating Road Kerb: ' + (error.message || 'Unknown error')
       );
     }
   };
@@ -68,24 +67,24 @@ const PavingBlockDetail = () => {
   };
 
   return (
-    <div className='pavingblock-detail-container'>
+    <div className='roadkerb-detail-container'>
       {message && <p className='error-message'>{message}</p>}
-      {pavingBlock ? (
+      {roadKerb ? (
         <>
-          <div className='pavingblock-content'>
+          <div className='roadkerb-content'>
             <img
-              src={`${Api.BASE_URL}/${pavingBlock.image_url}`}
-              alt={pavingBlock.title}
-              className='pavingblock-image'
+              src={`${Api.BASE_URL}/${roadKerb.image_url}`}
+              alt={roadKerb.title}
+              className='roadkerb-image'
             />
-            <div className='pavingblock-details'>
-              <h2>{pavingBlock.title}</h2>
-              <p>{pavingBlock.description}</p>
-              <p className='pavingblock-price'>Price: ${pavingBlock.price}</p>
+            <div className='roadkerb-details'>
+              <h2>{roadKerb.title}</h2>
+              <p>{roadKerb.description}</p>
+              <p className='roadkerb-price'>Price: ${roadKerb.price}</p>
               <FaEdit
                 className='edit-icon'
                 onClick={() => setIsEditing(true)}
-                title='Edit PavingBlock'
+                title='Edit Road Kerb'
               />
             </div>
           </div>
@@ -139,4 +138,4 @@ const PavingBlockDetail = () => {
   );
 };
 
-export default PavingBlockDetail;
+export default RoadKerbDetail;

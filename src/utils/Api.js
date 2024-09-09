@@ -74,17 +74,31 @@ export default {
   END_POINTS: {
     LOGIN: '/login',
     REGISTER: '/register',
+    LOGOUT: '/logout',
+
     CREATEBEAMBLOCK: `/create/beamblock`,
     BEAMBLOCKS: '/beamblocks',
     SINGLEBEAMBLOCK: (id) => `/beamblock/${id}`,
     UPDATEBEAMBLOCK: (id) => `/update/beamblock/${id}`,
+
     CREATEHOLLOWBLOCK: `/create/hollowblock`,
     HOLLOWBLOCKS: `/hollowblocks`,
     SINGLEHOLLOWBLOCK: (id) => `/hollowblock/${id}`,
     UPDATEHOLLOWBLOCK: (id) => `/update/hollowblock/${id}`,
+
     CREATEPAVINGBLOCK: `/create/pavingblock`,
     PAVINGBLOCKS: '/pavingblocks',
     SINGLEPAVINGBLOCK: (id) => `/pavingblock/${id}`,
     UPDATEPAVINGBLOCK: (id) => `/update/pavingblock/${id}`,
+
+    CREATEROADKERB: `/create/roadkerb`,
+    ROADKERBS: '/roadkerbs',
+    SINGLEROADKERB: (id) => `/roadkerb/${id}`,
+    UPDATEROADKERB: (id) => `/update/roadkerb/${id}`,
+
+    CREATEGALLERY: `/create/gallery`,
+    GALLERIES: '/gallery',
+    SINGLEGALLERY: (id) => `/gallery/${id}`,
+    UPDATEGALLERY: (id) => `/update/gallery/${id}`,
   },
 };

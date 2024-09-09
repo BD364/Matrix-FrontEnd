@@ -4,6 +4,7 @@ import { useAuth } from '../../AuthContext';
 import Navbar from '../Navbar/Navbar';
 import { Edit, Plus } from '../Icons';
 import Api from '../../utils/Api';
+import Footer from '../Footer/Footer';
 
 const PavingBlockList = () => {
   const [pavingBlocks, setPavingBlocks] = useState([]);
@@ -105,17 +106,19 @@ const PavingBlockList = () => {
             />
             <div className='flex flex-col flex-1 p-6 lg:p-12 bg-gray-50 relative'>
               <button
+                className='absolute top-4 right-20 w-12 h-12 flex items-center justify-center rounded-full bg-gray-200 text-gray-800 text-3xl font-bold hover:bg-gray-300 hover:text-gray-600 transition-all duration-300'
+                onClick={() => handleEditClick(selectedPavingBlock.id)}
+                aria-label='Edit Gallery'
+              >
+                <Edit />
+              </button>
+              <button
                 className='absolute top-4 right-4 w-12 h-12 flex items-center justify-center rounded-full bg-gray-200 text-gray-800 text-3xl font-bold hover:bg-gray-300 hover:text-gray-600 transition-all duration-300'
                 onClick={handleCloseModal}
                 aria-label='Close modal'
               >
                 &times;
               </button>
-              <Edit
-                className='absolute top-4 right-20 w-12 h-12 p-2 flex items-center justify-center rounded-full bg-gray-200 text-blue-500 text-3xl cursor-pointer hover:bg-gray-300 hover:text-blue-400 transition-all duration-300'
-                onClick={() => handleEditClick(selectedPavingBlock.id)}
-                title='Edit Paving Block'
-              />
               <div className='mt-16'>
                 <h2 className='text-3xl font-bold text-gray-800 mb-4'>
                   {selectedPavingBlock.title}
@@ -139,6 +142,7 @@ const PavingBlockList = () => {
       >
         <Plus className='w-8 h-8 stroke-white hover:stroke-yellow-500' />
       </button>
+      <Footer />
     </div>
   );
 };

@@ -1,48 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import Api from '../../utils/Api';
+import { useParams } from 'react-router-dom';
+import Api from '../../utils/Api'; 
 import Footer from '../Footer/Footer';
 
 
-const PavingBlockDetail = () => {
-  const { postId } = useParams();
-  const [pavingBlock, setPavingBlock] = useState(null);
+const GalleryDetail = () => {
+  const { galleryId } = useParams();
+  const [gallery, setGallery] = useState(null);
   const [message, setMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editDetails, setEditDetails] = useState({
     title: '',
-    description: '',
-    price: '',
+    image_url: ''
   });
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPavingBlock = async () => {
+    const fetchGallery = async () => {
       try {
-        const { data } = await Api.api.get(
-          Api.END_POINTS.SINGLEPAVINGBLOCK(postId)
-        );
-        setPavingBlock(data);
+        const { data } = await Api.api.get(Api.END_POINTS.SINGLEGALLERY(galleryId));
+        setGallery(data.gallery);
         setEditDetails({
-          title: data.title,
-          description: data.description,
-          price: data.price,
+          title: data.gallery.title,
+          image_url: data.gallery.image_url
         });
       } catch (error) {
-        setMessage(
-          'Error fetching PavingBlock: ' + (error.message || 'Unknown error')
-        );
+        setMessage('Error fetching gallery: ' + (error.message || 'Unknown error'));
       }
     };
 
-    fetchPavingBlock();
-  }, [postId]);
+    fetchGallery();
+  }, [galleryId]);
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setEditDetails((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -50,16 +43,14 @@ const PavingBlockDetail = () => {
     e.preventDefault();
     try {
       const { data } = await Api.api.put(
-        Api.END_POINTS.UPDATEPAVINGBLOCK(postId),
+        Api.END_POINTS.UPDATEGALLERY(galleryId),
         editDetails
       );
-      setPavingBlock(data);
-      setMessage('PavingBlock updated successfully!');
+      setGallery(data.gallery);
+      setMessage('Gallery updated successfully!');
       setIsEditing(false);
     } catch (error) {
-      setMessage(
-        'Error updating PavingBlock: ' + (error.message || 'Unknown error')
-      );
+      setMessage('Error updating gallery: ' + (error.message || 'Unknown error'));
     }
   };
 
@@ -68,24 +59,22 @@ const PavingBlockDetail = () => {
   };
 
   return (
-    <div className='pavingblock-detail-container'>
+    <div className='gallery-detail-container'>
       {message && <p className='error-message'>{message}</p>}
-      {pavingBlock ? (
+      {gallery ? (
         <>
-          <div className='pavingblock-content'>
+          <div className='gallery-content'>
             <img
-              src={`${Api.BASE_URL}/${pavingBlock.image_url}`}
-              alt={pavingBlock.title}
-              className='pavingblock-image'
+              src={`${Api.BASE_URL}/${gallery.image_url}`}
+              alt={gallery.title}
+              className='gallery-image'
             />
-            <div className='pavingblock-details'>
-              <h2>{pavingBlock.title}</h2>
-              <p>{pavingBlock.description}</p>
-              <p className='pavingblock-price'>Price: ${pavingBlock.price}</p>
+            <div className='gallery-details'>
+              <h2>{gallery.title}</h2>
               <FaEdit
                 className='edit-icon'
                 onClick={() => setIsEditing(true)}
-                title='Edit PavingBlock'
+                title='Edit Gallery'
               />
             </div>
           </div>
@@ -106,20 +95,12 @@ const PavingBlockDetail = () => {
                     className='input-field'
                     required
                   />
-                  <textarea
-                    name='description'
-                    value={editDetails.description}
-                    onChange={handleEditChange}
-                    placeholder='Description'
-                    className='input-field'
-                    required
-                  />
                   <input
-                    type='number'
-                    name='price'
-                    value={editDetails.price}
+                    type='text'
+                    name='image_url'
+                    value={editDetails.image_url}
                     onChange={handleEditChange}
-                    placeholder='Price'
+                    placeholder='Image URL'
                     className='input-field'
                     required
                   />
@@ -139,4 +120,4 @@ const PavingBlockDetail = () => {
   );
 };
 
-export default PavingBlockDetail;
+export default GalleryDetail;

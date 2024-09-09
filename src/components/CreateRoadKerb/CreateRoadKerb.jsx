@@ -6,7 +6,8 @@ import Navbar from '../Navbar/Navbar';
 import Api from '../../utils/Api';
 import Footer from '../Footer/Footer';
 
-const CreateHollowBlock = () => {
+
+const CreateRoadKerb = () => {
   const { token, api } = useAuth();
   const {
     register,
@@ -36,17 +37,17 @@ const CreateHollowBlock = () => {
     }
 
     try {
-      const { data } = await Api.api.post(Api.END_POINTS.CREATEHOLLOWBLOCK, formData, {
+      const { data } = await Api.api.post(Api.END_POINTS.CREATEROADKERB, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
-      setMessage('Hollow Block created successfully!');
-      setTimeout(() => navigate('/hollowblocks'), 2000);
+      setMessage('Road Kerb created successfully! Redirecting to home page...');
+      setTimeout(() => navigate('/roadkerbs'), 2000);
     } catch (error) {
       setMessage(
-        'Error creating post: ' +
+        'Error creating road kerb: ' +
           (error.response ? error.response.data.message : error.message)
       );
     }
@@ -58,14 +59,14 @@ const CreateHollowBlock = () => {
 
       <div className='max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-16'>
         <h2 className='text-3xl font-semibold mb-6 text-center'>
-          Create New Hollow Block
+          Create New Road Kerb
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
           <div className='mb-4'>
             <input
               type='text'
               {...register('title', { required: 'Title is required' })}
-              placeholder='Hollow Block Title'
+              placeholder='Road Kerb Title'
               className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
             {errors.title && (
@@ -112,7 +113,7 @@ const CreateHollowBlock = () => {
             type='submit'
             className='w-full py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 transition-colors'
           >
-            Create Hollow Block
+            Create Road Kerb
           </button>
         </form>
         {message && <p className='mt-4 text-center text-green-500'>{message}</p>}
@@ -122,4 +123,4 @@ const CreateHollowBlock = () => {
   );
 };
 
-export default CreateHollowBlock;
+export default CreateRoadKerb;

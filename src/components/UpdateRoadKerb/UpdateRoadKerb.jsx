@@ -7,10 +7,10 @@ import Api from '../../utils/Api';
 import Footer from '../Footer/Footer';
 
 
-const UpdateBeamBlock = () => {
+const UpdateRoadKerb = () => {
   const { postId } = useParams();
   const { api, token } = useAuth();
-  const [postData, setPostData] = useState(null);
+  const [roadKerbData, setRoadKerbData] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -23,38 +23,36 @@ const UpdateBeamBlock = () => {
   } = useForm({
     defaultValues: {
       title: '',
-      content: '',
       price: '',
       description: '',
     },
   });
 
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchRoadKerb = async () => {
       try {
         const { data } = await Api.api.get(
-          Api.END_POINTS.SINGLEBEAMBLOCK(postId),
+          Api.END_POINTS.SINGLEROADKERB(postId),
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setPostData(data);
+        setRoadKerbData(data);
         setValue('title', data.title);
-        setValue('content', data.content);
         setValue('price', data.price);
         setValue('description', data.description);
       } catch (error) {
         console.error(
-          'Error fetching post:',
+          'Error fetching road kerb:',
           error.response ? error.response.data : error.message
         );
-        setMessage('Error fetching post.');
+        setMessage('Error fetching road kerb.');
       }
     };
 
-    fetchPost();
+    fetchRoadKerb();
   }, [postId, api, token, setValue]);
 
   const handleFileChange = (e) => {
@@ -64,7 +62,6 @@ const UpdateBeamBlock = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append('title', data.title);
-    formData.append('content', data.content);
     formData.append('price', data.price);
     formData.append('description', data.description);
     if (imageFile) {
@@ -73,7 +70,7 @@ const UpdateBeamBlock = () => {
 
     try {
       const response = await Api.api.put(
-        Api.END_POINTS.UPDATEBEAMBLOCK(postId),
+        Api.END_POINTS.UPDATEROADKERB(postId),
         formData,
         {
           headers: {
@@ -83,32 +80,32 @@ const UpdateBeamBlock = () => {
         }
       );
       if (response?.data) {
-        setPostData(response.data.beamblock);
-        setMessage('Post updated successfully! Redirecting to home page...');
-        setTimeout(() => navigate('/beamblocks'), 2000);
+        setRoadKerbData(response.data.roadkerb);
+        setMessage('Road kerb updated successfully! Redirecting...');
+        setTimeout(() => navigate('/roadkerbs'), 2000);
       } else {
         setMessage('Unexpected response format.');
       }
     } catch (error) {
       setMessage(
-        'Error updating post: ' +
+        'Error updating road kerb: ' +
           (error.response ? error.response.data : error.message)
       );
     }
   };
 
   return (
-    <div className='bg-gray-100 min-h-screen '>
+    <div className='bg-gray-100 min-h-screen'>
       <Navbar className='w-full fixed top-0 left-0 z-50 bg-white shadow-md' />
       <div className='pt-16 max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg'>
-        <h2 className='text-2xl font-semibold mb-4'>Update Post</h2>
+        <h2 className='text-2xl font-semibold mb-4'>Update Road Kerb</h2>
         {message && <p className='mb-4 text-red-500'>{message}</p>}
         <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
           <div className='mb-4'>
             <input
               type='text'
               {...register('title', { required: 'Title is required' })}
-              placeholder='Post Title'
+              placeholder='Kerb Title'
               className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
             {errors.title && (
@@ -116,14 +113,22 @@ const UpdateBeamBlock = () => {
             )}
           </div>
           <div className='mb-4'>
-            <textarea
-              {...register('content', { required: 'Content is required' })}
-              placeholder='Post Content'
+            <input
+              type='number'
+              {...register('price', { required: 'Price is required' })}
+              placeholder='Kerb Price'
               className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
             />
-            {errors.content && (
-              <p className='text-red-500'>{errors.content.message}</p>
+            {errors.price && (
+              <p className='text-red-500'>{errors.price.message}</p>
             )}
+          </div>
+          <div className='mb-4'>
+            <textarea
+              {...register('description')}
+              placeholder='Kerb Description'
+              className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
           </div>
           <div className='mb-4 relative'>
             <input
@@ -139,37 +144,19 @@ const UpdateBeamBlock = () => {
               Choose file
             </label>
           </div>
-          <div className='mb-4'>
-            <input
-              type='number'
-              {...register('price', { required: 'Price is required' })}
-              placeholder='Price'
-              className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
-            />
-            {errors.price && (
-              <p className='text-red-500'>{errors.price.message}</p>
-            )}
-          </div>
-          <div className='mb-4'>
-            <textarea
-              {...register('description')}
-              placeholder='Description'
-              className='w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
-            />
-          </div>
           <button
             type='submit'
             className='w-full py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 transition-colors'
           >
-            Update Post
+            Update Road Kerb
           </button>
         </form>
-        {postData?.image_url && (
+        {roadKerbData?.image_url && (
           <div className='mt-6 text-center'>
             <h3 className='text-lg font-semibold mb-2'>Current Image:</h3>
             <img
-              src={`${Api.BASE_URL}${postData.image_url}`}
-              alt='Current Post'
+              src={`${Api.BASE_URL}${roadKerbData.image_url}`}
+              alt='Current Road Kerb'   
               className='max-w-full h-auto rounded-md border border-gray-300'
             />
           </div>
@@ -180,4 +167,4 @@ const UpdateBeamBlock = () => {
   );
 };
 
-export default UpdateBeamBlock;
+export default UpdateRoadKerb;
