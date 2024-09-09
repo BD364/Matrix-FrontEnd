@@ -1,39 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './beamBlockDetail.css';
 import Api from '../../utils/Api';
 import Footer from '../Footer/Footer';
 
-const BeamBlockDetail = () => {
+
+const PavingBlockDetail = () => {
   const { postId } = useParams();
-  const [beamBlock, setBeamBlock] = useState(null);
+  const [pavingBlock, setPavingBlock] = useState(null);
   const [message, setMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editDetails, setEditDetails] = useState({
     title: '',
     description: '',
-    content: '',
     price: '',
   });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBeamBlock = async () => {
+    const fetchPavingBlock = async () => {
       try {
-        const { data } = await Api.api.get(Api.END_POINTS.SINGLEBEAMBLOCK(postId));
-        setBeamBlock(data);
+        const { data } = await Api.api.get(
+          Api.END_POINTS.SINGLEPAVINGBLOCK(postId)
+        );
+        setPavingBlock(data);
         setEditDetails({
           title: data.title,
           description: data.description,
-          content: data.content,
           price: data.price,
         });
       } catch (error) {
-        setMessage('Error fetching BeamBlock: ' + (error.message || 'Unknown error'));
+        setMessage(
+          'Error fetching PavingBlock: ' + (error.message || 'Unknown error')
+        );
       }
     };
 
-    fetchBeamBlock();
+    fetchPavingBlock();
   }, [postId]);
 
   const handleEditChange = (e) => {
@@ -47,12 +49,17 @@ const BeamBlockDetail = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await Api.api.put(Api.END_POINTS.UPDATEBEAMBLOCK(postId), editDetails);
-      setBeamBlock(data);
-      setMessage('BeamBlock updated successfully!');
+      const { data } = await Api.api.put(
+        Api.END_POINTS.UPDATEPAVINGBLOCK(postId),
+        editDetails
+      );
+      setPavingBlock(data);
+      setMessage('PavingBlock updated successfully!');
       setIsEditing(false);
     } catch (error) {
-      setMessage('Error updating BeamBlock: ' + (error.message || 'Unknown error'));
+      setMessage(
+        'Error updating PavingBlock: ' + (error.message || 'Unknown error')
+      );
     }
   };
 
@@ -61,25 +68,24 @@ const BeamBlockDetail = () => {
   };
 
   return (
-    <div className="beamblock-detail-container">
-      {message && <p className="error-message">{message}</p>}
-      {beamBlock ? (
+    <div className='pavingblock-detail-container'>
+      {message && <p className='error-message'>{message}</p>}
+      {pavingBlock ? (
         <>
-          <div className='beamblock-content'>
+          <div className='pavingblock-content'>
             <img
-              src={`${Api.BASE_URL}/${beamBlock.image_url}`} 
-              alt={beamBlock.title}
-              className='beamblock-image'
+              src={`${Api.BASE_URL}/${pavingBlock.image_url}`}
+              alt={pavingBlock.title}
+              className='pavingblock-image'
             />
-            <div className='beamblock-details'>
-              <h2>{beamBlock.title}</h2>
-              <p>{beamBlock.content}</p>
-              <p>{beamBlock.description}</p>
-              <p className='beamblock-price'>Price: ${beamBlock.price}</p>
+            <div className='pavingblock-details'>
+              <h2>{pavingBlock.title}</h2>
+              <p>{pavingBlock.description}</p>
+              <p className='pavingblock-price'>Price: ${pavingBlock.price}</p>
               <FaEdit
                 className='edit-icon'
                 onClick={() => setIsEditing(true)}
-                title='Edit BeamBlock'
+                title='Edit PavingBlock'
               />
             </div>
           </div>
@@ -108,14 +114,6 @@ const BeamBlockDetail = () => {
                     className='input-field'
                     required
                   />
-                  <textarea
-                    name='content'
-                    value={editDetails.content}
-                    onChange={handleEditChange}
-                    placeholder='Content'
-                    className='input-field'
-                    required
-                  />
                   <input
                     type='number'
                     name='price'
@@ -125,7 +123,9 @@ const BeamBlockDetail = () => {
                     className='input-field'
                     required
                   />
-                  <button type='submit' className='submit-button'>Update</button>
+                  <button type='submit' className='submit-button'>
+                    Update
+                  </button>
                 </form>
               </div>
             </div>
@@ -139,4 +139,4 @@ const BeamBlockDetail = () => {
   );
 };
 
-export default BeamBlockDetail;
+export default PavingBlockDetail;

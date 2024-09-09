@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './navbar.css';
 import { FaInstagram, FaTwitter, FaWhatsapp, FaFacebook } from 'react-icons/fa';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import Login from '../Login/Login';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../AuthContext';
 import Modal from '../Modal';
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem('token')
+  );
   const navigate = useNavigate();
+  const { handleLogout } = useAuth();
+
+  useEffect(() => {
+    // Check authentication status
+    setIsAuthenticated(!!localStorage.getItem('token'));
+  }, [localStorage.getItem('token')]);
 
   const handleLoginSuccess = () => {
     setIsModalOpen(false);
+    setIsAuthenticated(true);
     navigate('/');
   };
 
@@ -25,7 +36,11 @@ const Navbar = () => {
     setIsModalOpen(false);
   };
 
-  const navigateToHome = () => {
+  const handleSignOut = () => {
+    handleLogout();
+    setIsAuthenticated(false);
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
     navigate('/');
   };
 
@@ -36,7 +51,7 @@ const Navbar = () => {
           className='logoImage'
           src='/assets/Matrixlogo.jpeg'
           alt='Matrix Precast Concrete'
-          onClick={navigateToHome}
+          onClick={() => navigate('/')}
         />
       </div>
 
@@ -47,17 +62,17 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <a href='/hollow-blocks' className='hover:text-yellow-400'>
+          <a href='/hollowblocks' className='hover:text-yellow-400'>
             Hollow Blocks
           </a>
         </li>
         <li>
-          <a href='/paving-blocks' className='hover:text-yellow-400'>
+          <a href='/pavingblocks' className='hover:text-yellow-400'>
             Paving Blocks
           </a>
         </li>
         <li>
-          <a href='/road-kerb' className='hover:text-yellow-400'>
+          <a href='/roadkerbs' className='hover:text-yellow-400'>
             Road Kerb & Accessories
           </a>
         </li>
@@ -109,11 +124,17 @@ const Navbar = () => {
             <FaFacebook />
           </a>
         </div>
+
         <div>
-          <Link to='/'></Link>
-          <button className='sign-in' onClick={openModal}>
-            Sign In
-          </button>
+          {!isAuthenticated ? (
+            <button className='sign-in' onClick={openModal}>
+              Sign In
+            </button>
+          ) : (
+            <button onClick={handleSignOut} className='sign-out'>
+              Sign Out
+            </button>
+          )}
         </div>
 
         <div className='navbarMenu'>
@@ -190,14 +211,20 @@ const Navbar = () => {
               </a>
             </div>
             <div>
-              <Link to='/'></Link>
-              <button className='sign-in-toogle' onClick={openModal}>
-                Sign In
-              </button>
+              {!isAuthenticated ? (
+                <button className='sign-in' onClick={openModal}>
+                  Sign In
+                </button>
+              ) : (
+                <button onClick={handleSignOut} className='sign-out'>
+                  Sign Out
+                </button>
+              )}
             </div>
           </div>
         </div>
       )}
+
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <Login onSuccess={handleLoginSuccess} />
       </Modal>

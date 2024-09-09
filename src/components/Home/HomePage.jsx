@@ -3,12 +3,30 @@ import { useNavigate } from 'react-router-dom';
 import './homepage.css';
 import Navbar from '../Navbar/Navbar';
 import { ArrowIcon } from '../Icons';
+import Footer from '../Footer/Footer';
+
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   const handleBeamblocks = () => {
     navigate('/beamblocks');
+  };
+
+  const handleHollowBlocks = () => {
+    navigate('/hollowblocks');
+  };
+
+  const handlePavingBlocks = () => {
+    navigate('/pavingblocks');
+  };
+
+  const handleRoadKerbs = () => {
+    navigate('/roadkerbs');
+  };
+
+  const handleGallery = () => {
+    navigate('/gallery');
   };
 
   return (
@@ -51,7 +69,7 @@ const HomePage = () => {
             onClick={handleBeamblocks}
           >
             <img
-              src='/assets/images/beam1.jpg'
+              src='assets/images/beam1.jpg'
               alt='Beam & Block System'
               className='w-full h-60 sm:h-72 md:h-80 object-cover'
             />
@@ -70,9 +88,12 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'>
+          <div
+            className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'
+            onClick={handleHollowBlocks}
+          >
             <img
-              src='/assets/images/block3.jpg'
+              src='assets/images/block3.jpg'
               alt='Beam & Block System'
               className='w-full h-60 sm:h-72 md:h-80 object-cover'
             />
@@ -92,9 +113,12 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'>
+          <div
+            className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'
+            onClick={handlePavingBlocks}
+          >
             <img
-              src='/assets/images/block4.jpg'
+              src='assets/images/block4.jpg'
               alt='Beam & Block System'
               className='w-full h-60 sm:h-72 md:h-80 object-cover'
             />
@@ -113,9 +137,12 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'>
+          <div
+            className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'
+            onClick={handleRoadKerbs}
+          >
             <img
-              src='/assets/images/beam5.jpg'
+              src='assets/images/beam5.jpg'
               alt='Beam & Block System'
               className='w-full h-60 sm:h-72 md:h-80 object-cover'
             />
@@ -136,7 +163,7 @@ const HomePage = () => {
 
           <div className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'>
             <img
-              src='/assets/images/services.jpg'
+              src='assets/images/services.jpg'
               alt='Beam & Block System'
               className='w-full h-60 sm:h-72 md:h-80 object-cover'
             />
@@ -153,9 +180,12 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'>
+          <div
+            className='bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 cursor-pointer'
+            onClick={handleGallery}
+          >
             <img
-              src='/assets/images/gallery.jpg'
+              src='assets/images/gallery.jpg'
               alt='Beam & Block System'
               className='w-full h-60 sm:h-72 md:h-80 object-cover'
             />
@@ -173,6 +203,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

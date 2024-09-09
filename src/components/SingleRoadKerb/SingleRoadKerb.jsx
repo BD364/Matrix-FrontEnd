@@ -1,39 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import './beamBlockDetail.css';
+import { useParams } from 'react-router-dom';
 import Api from '../../utils/Api';
 import Footer from '../Footer/Footer';
 
-const BeamBlockDetail = () => {
+
+const RoadKerbDetail = () => {
   const { postId } = useParams();
-  const [beamBlock, setBeamBlock] = useState(null);
+  const [roadKerb, setRoadKerb] = useState(null);
   const [message, setMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editDetails, setEditDetails] = useState({
     title: '',
     description: '',
-    content: '',
     price: '',
   });
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBeamBlock = async () => {
+    const fetchRoadKerb = async () => {
       try {
-        const { data } = await Api.api.get(Api.END_POINTS.SINGLEBEAMBLOCK(postId));
-        setBeamBlock(data);
+        const { data } = await Api.api.get(
+          Api.END_POINTS.SINGLEROADKERB(postId)
+        );
+        setRoadKerb(data);
         setEditDetails({
           title: data.title,
           description: data.description,
-          content: data.content,
           price: data.price,
         });
       } catch (error) {
-        setMessage('Error fetching BeamBlock: ' + (error.message || 'Unknown error'));
+        setMessage(
+          'Error fetching Road Kerb: ' + (error.message || 'Unknown error')
+        );
       }
     };
 
-    fetchBeamBlock();
+    fetchRoadKerb();
   }, [postId]);
 
   const handleEditChange = (e) => {
@@ -47,12 +48,17 @@ const BeamBlockDetail = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await Api.api.put(Api.END_POINTS.UPDATEBEAMBLOCK(postId), editDetails);
-      setBeamBlock(data);
-      setMessage('BeamBlock updated successfully!');
+      const { data } = await Api.api.put(
+        Api.END_POINTS.UPDATEROADKERB(postId),
+        editDetails
+      );
+      setRoadKerb(data);
+      setMessage('Road Kerb updated successfully!');
       setIsEditing(false);
     } catch (error) {
-      setMessage('Error updating BeamBlock: ' + (error.message || 'Unknown error'));
+      setMessage(
+        'Error updating Road Kerb: ' + (error.message || 'Unknown error')
+      );
     }
   };
 
@@ -61,25 +67,24 @@ const BeamBlockDetail = () => {
   };
 
   return (
-    <div className="beamblock-detail-container">
-      {message && <p className="error-message">{message}</p>}
-      {beamBlock ? (
+    <div className='roadkerb-detail-container'>
+      {message && <p className='error-message'>{message}</p>}
+      {roadKerb ? (
         <>
-          <div className='beamblock-content'>
+          <div className='roadkerb-content'>
             <img
-              src={`${Api.BASE_URL}/${beamBlock.image_url}`} 
-              alt={beamBlock.title}
-              className='beamblock-image'
+              src={`${Api.BASE_URL}/${roadKerb.image_url}`}
+              alt={roadKerb.title}
+              className='roadkerb-image'
             />
-            <div className='beamblock-details'>
-              <h2>{beamBlock.title}</h2>
-              <p>{beamBlock.content}</p>
-              <p>{beamBlock.description}</p>
-              <p className='beamblock-price'>Price: ${beamBlock.price}</p>
+            <div className='roadkerb-details'>
+              <h2>{roadKerb.title}</h2>
+              <p>{roadKerb.description}</p>
+              <p className='roadkerb-price'>Price: ${roadKerb.price}</p>
               <FaEdit
                 className='edit-icon'
                 onClick={() => setIsEditing(true)}
-                title='Edit BeamBlock'
+                title='Edit Road Kerb'
               />
             </div>
           </div>
@@ -108,14 +113,6 @@ const BeamBlockDetail = () => {
                     className='input-field'
                     required
                   />
-                  <textarea
-                    name='content'
-                    value={editDetails.content}
-                    onChange={handleEditChange}
-                    placeholder='Content'
-                    className='input-field'
-                    required
-                  />
                   <input
                     type='number'
                     name='price'
@@ -125,7 +122,9 @@ const BeamBlockDetail = () => {
                     className='input-field'
                     required
                   />
-                  <button type='submit' className='submit-button'>Update</button>
+                  <button type='submit' className='submit-button'>
+                    Update
+                  </button>
                 </form>
               </div>
             </div>
@@ -139,4 +138,4 @@ const BeamBlockDetail = () => {
   );
 };
 
-export default BeamBlockDetail;
+export default RoadKerbDetail;

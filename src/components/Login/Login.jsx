@@ -34,12 +34,9 @@ const Login = ({ onSuccess }) => {
 
   return (
     <div className='w-full'>
-      <h1 className='text-3xl font-bold text-center text-gray-800 mb-2'>
+      <h1 className='text-3xl font-bold text-center text-gray-800 mb-8'>
         Log in
       </h1>
-      <h2 className='text-lg font-semibold text-center text-gray-600 mb-6'>
-        Access your account
-      </h2>
       <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
         <div>
           <input

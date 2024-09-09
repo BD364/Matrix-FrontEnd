@@ -1,39 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './beamBlockDetail.css';
+import './hollowBlockDetail.css';
 import Api from '../../utils/Api';
 import Footer from '../Footer/Footer';
 
-const BeamBlockDetail = () => {
+
+const HollowBlockDetail = () => {
   const { postId } = useParams();
-  const [beamBlock, setBeamBlock] = useState(null);
+  const [hollowBlock, setHollowBlock] = useState(null);
   const [message, setMessage] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editDetails, setEditDetails] = useState({
     title: '',
     description: '',
-    content: '',
     price: '',
   });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBeamBlock = async () => {
+    const fetchHollowBlock = async () => {
       try {
-        const { data } = await Api.api.get(Api.END_POINTS.SINGLEBEAMBLOCK(postId));
-        setBeamBlock(data);
+        const { data } = await Api.api.get(
+          Api.END_POINTS.SINGLEHOLLOWBLOCK(postId)
+        );
+        setHollowBlock(data);
         setEditDetails({
           title: data.title,
           description: data.description,
-          content: data.content,
           price: data.price,
         });
       } catch (error) {
-        setMessage('Error fetching BeamBlock: ' + (error.message || 'Unknown error'));
+        setMessage(
+          'Error fetching HollowBlock: ' + (error.message || 'Unknown error')
+        );
       }
     };
 
-    fetchBeamBlock();
+    fetchHollowBlock();
   }, [postId]);
 
   const handleEditChange = (e) => {
@@ -47,12 +50,17 @@ const BeamBlockDetail = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await Api.api.put(Api.END_POINTS.UPDATEBEAMBLOCK(postId), editDetails);
-      setBeamBlock(data);
-      setMessage('BeamBlock updated successfully!');
+      const { data } = await Api.api.put(
+        Api.END_POINTS.UPDATEHOLLOWBLOCK(postId),
+        editDetails
+      );
+      setHollowBlock(data);
+      setMessage('HollowBlock updated successfully!');
       setIsEditing(false);
     } catch (error) {
-      setMessage('Error updating BeamBlock: ' + (error.message || 'Unknown error'));
+      setMessage(
+        'Error updating HollowBlock: ' + (error.message || 'Unknown error')
+      );
     }
   };
 
@@ -61,25 +69,24 @@ const BeamBlockDetail = () => {
   };
 
   return (
-    <div className="beamblock-detail-container">
-      {message && <p className="error-message">{message}</p>}
-      {beamBlock ? (
+    <div className='hollowblock-detail-container'>
+      {message && <p className='error-message'>{message}</p>}
+      {hollowBlock ? (
         <>
-          <div className='beamblock-content'>
+          <div className='hollowblock-content'>
             <img
-              src={`${Api.BASE_URL}/${beamBlock.image_url}`} 
-              alt={beamBlock.title}
-              className='beamblock-image'
+              src={`${Api.BASE_URL}/${hollowBlock.image_url}`}
+              alt={hollowBlock.title}
+              className='hollowblock-image'
             />
-            <div className='beamblock-details'>
-              <h2>{beamBlock.title}</h2>
-              <p>{beamBlock.content}</p>
-              <p>{beamBlock.description}</p>
-              <p className='beamblock-price'>Price: ${beamBlock.price}</p>
+            <div className='hollowblock-details'>
+              <h2>{hollowBlock.title}</h2>
+              <p>{hollowBlock.description}</p>
+              <p className='hollowblock-price'>Price: ${hollowBlock.price}</p>
               <FaEdit
                 className='edit-icon'
                 onClick={() => setIsEditing(true)}
-                title='Edit BeamBlock'
+                title='Edit HollowBlock'
               />
             </div>
           </div>
@@ -108,14 +115,6 @@ const BeamBlockDetail = () => {
                     className='input-field'
                     required
                   />
-                  <textarea
-                    name='content'
-                    value={editDetails.content}
-                    onChange={handleEditChange}
-                    placeholder='Content'
-                    className='input-field'
-                    required
-                  />
                   <input
                     type='number'
                     name='price'
@@ -125,7 +124,9 @@ const BeamBlockDetail = () => {
                     className='input-field'
                     required
                   />
-                  <button type='submit' className='submit-button'>Update</button>
+                  <button type='submit' className='submit-button'>
+                    Update
+                  </button>
                 </form>
               </div>
             </div>
@@ -139,4 +140,4 @@ const BeamBlockDetail = () => {
   );
 };
 
-export default BeamBlockDetail;
+export default HollowBlockDetail;
