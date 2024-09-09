@@ -11,7 +11,9 @@ import Modal from '../Modal';
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem('token')
+  );
   const navigate = useNavigate();
   const { handleLogout } = useAuth();
 
@@ -60,17 +62,17 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <a href='/hollow-blocks' className='hover:text-yellow-400'>
+          <a href='/hollowblocks' className='hover:text-yellow-400'>
             Hollow Blocks
           </a>
         </li>
         <li>
-          <a href='/paving-blocks' className='hover:text-yellow-400'>
+          <a href='/pavingblocks' className='hover:text-yellow-400'>
             Paving Blocks
           </a>
         </li>
         <li>
-          <a href='/road-kerb' className='hover:text-yellow-400'>
+          <a href='/roadkerbs' className='hover:text-yellow-400'>
             Road Kerb & Accessories
           </a>
         </li>
@@ -129,10 +131,7 @@ const Navbar = () => {
               Sign In
             </button>
           ) : (
-            <button
-              onClick={handleSignOut}
-              className='sign-out'
-            >
+            <button onClick={handleSignOut} className='sign-out'>
               Sign Out
             </button>
           )}
@@ -217,10 +216,7 @@ const Navbar = () => {
                   Sign In
                 </button>
               ) : (
-                <button
-                  onClick={handleSignOut}
-                  className='sign-out'
-                >
+                <button onClick={handleSignOut} className='sign-out'>
                   Sign Out
                 </button>
               )}
